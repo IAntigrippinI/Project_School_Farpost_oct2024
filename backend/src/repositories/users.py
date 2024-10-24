@@ -10,5 +10,7 @@ class UsersRepository(BaseRepository):
     async def get_full_user(self, **filter_by) -> User:
         query = select(self.model).filter_by(**filter_by)
         result = await self.session.execute(query)
-        model = result.scalars().one()
+        model = result.scalars().one_or_none()
+        if not model:
+            return None
         return User.model_validate(model, from_attributes=True)
