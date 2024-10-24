@@ -1,3 +1,5 @@
+import sqlalchemy
+import asyncpg
 from fastapi import APIRouter, Response, HTTPException
 from src.schemas.auth import UserReqAdd, UserAdd
 from src.services.auth import AuthService
@@ -9,7 +11,7 @@ router = APIRouter(prefix="/auth", tags=["Аутентификация"])
 
 
 @router.post("/register")
-async def register_user(data: UserReqAdd):
+async def register_user(data: UserReqAdd, responce: Response):
     try:
         hashed_pass = AuthService().hash_password(data.password)
         async with async_session_maker() as session:
@@ -17,9 +19,13 @@ async def register_user(data: UserReqAdd):
                 UserAdd(phone=data.phone, hashed_password=hashed_pass)
             )
             await session.commit()
-        # access_token = await AuthService.create_access_token()
-    except Exception as e:
-        print(e)
+        user = await UsersRepository(session=session).get_full_user(phone=data.phone)
+
+        access_token = AuthService().create_access_token({"user_id": user.id})
+        responce.set_cookie("access_token", access_token)
+        return {"status": "OK"}
+    except sqlalchemy.exc.IntegrityError as e:
+
         return {"status": "error", "message": "phone is register"}
 
 

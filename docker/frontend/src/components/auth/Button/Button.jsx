@@ -1,7 +1,7 @@
 import './Button.css'
-const Button = ({ text }) => {
+const Button = ({ onClick, text, style }) => {
     return (
-        <div className="auth-btn-swch">
+        <div onClick={onClick} className={style}>
             {text}
         </div>
     )
