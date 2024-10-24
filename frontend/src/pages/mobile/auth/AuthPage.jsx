@@ -11,22 +11,23 @@ import InputFields from '../../../components/auth/InputFields/InputFields'
 const AuthPage = () => {
 
     let api = 'http://127.0.0.1:8000/auth/login'
+    let inactive_style = 'auth-btn-swch-inactive'
+    let active_style = 'auth-btn-swch-active'
     const navigate = useNavigate()
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [isReg, setIsReg] = useState(0)
+
+
 
     function onChangePhone(e) {
-        console.log('change')
         setPhone(e.target.value)
-        console.log(phone)
     }
     function onChangePassword(e) {
         setPassword(e.target.value)
-        console.log(password)
     }
 
     function onClickLogin(e) {
-        console.log('press login')
         // const data = JSON.stringify({ phone: login, password: password });
         const data = {
             phone: phone,
@@ -39,9 +40,22 @@ const AuthPage = () => {
             },
         }).then((resp) => {
             // console.log(resp.data);
+
             document.cookie = 'access_token=' + resp.data.token
             navigate('/')
+        }).catch((err) => {
+            console.log(err)
         });
+    }
+
+    function onClickSwitchBtn(e) {
+        console.log(e.target.innerText)
+        if (e.target.innerText == 'Вход с паролем') {
+            setIsReg(0)
+        }
+        else {
+            setIsReg(1)
+        }
     }
 
     return (
@@ -54,21 +68,29 @@ const AuthPage = () => {
 
                     <div className="auth-btns-switch">
                         <div className="auth-btn-block-1">
-                            <Button text={'Вход с паролем'} />
+                            <Button onClick={onClickSwitchBtn} text={'Вход с паролем'} style={isReg ? inactive_style : active_style} />
                         </div>
 
                         <div className="auth-btn-block-2">
-                            <Button text={'Регистрация'} />
+                            <Button onClick={onClickSwitchBtn} text={'Регистрация'} style={isReg ? active_style : inactive_style} />
                         </div>
                     </div>
-                    <div className="auth-inp-block">
+                    {isReg ? <>
+                        <div className="auth-inp-block">
+                            <InputFields onChange={onChangePhone} description={'Телефон'} />
+                        </div>
+                        <div className="auth-btns-login-field">
+                            <ButtonLogin onClick={onClickLogin} text={'Получить код'} style={'auth-btn-login-orange'} />
+                            <ButtonLogin text={'Войти через телеграм'} style={'auth-btn-login-white'} />
+                        </div>
+                    </> : <> <div className="auth-inp-block">
                         <InputFields onChange={onChangePhone} description={'Телефон/Логин'} />
-                        <InputFields onChange={onChangePassword} description={'Пароль'} />
+                        <InputFields onChange={onChangePassword} type={"password"} description={'Пароль'} />
                     </div>
-                    <div className="auth-btns-login-field">
-                        <ButtonLogin onClick={onClickLogin} text={'Войти'} style={'auth-btn-login-orange'} />
-                        <ButtonLogin text={'Войти через телеграм'} style={'auth-btn-login-white'} />
-                    </div>
+                        <div className="auth-btns-login-field">
+                            <ButtonLogin onClick={onClickLogin} text={'Войти'} style={'auth-btn-login-orange'} />
+                            <ButtonLogin text={'Войти через телеграм'} style={'auth-btn-login-white'} />
+                        </div></>}
                 </div>
             </div>
         </div>

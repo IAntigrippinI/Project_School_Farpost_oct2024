@@ -6,11 +6,13 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 from src.api.auth import router as auth_router
 from src.api.events import router as event_router
+from src.api.users import router as userEvents_router
 
 app = FastAPI()
 
 app.include_router(auth_router)
 app.include_router(event_router)
+app.include_router(userEvents_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Разрешенные источники

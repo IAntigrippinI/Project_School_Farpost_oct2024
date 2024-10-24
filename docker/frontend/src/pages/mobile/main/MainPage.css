@@ -1,0 +1,123 @@
+.main-page {
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.header {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.header-menu {
+    /* background-color: red; */
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 5%;
+    display: flex;
+    vertical-align: middle;
+}
+
+.burger {
+    margin-top: 5%;
+    margin-right: 7%;
+}
+
+.place {
+    margin-left: 5%;
+    margin-top: -2%;
+}
+
+.items {
+    display: flex;
+    justify-content: end;
+    width: 70%;
+    /* background-color: red; */
+    vertical-align: middle;
+}
+
+.left-menu {
+    width: 30%;
+    display: flex;
+    /* background-color: yellow; */
+}
+
+.add-event-btn {
+    width: 60%;
+    /* background-color: black; */
+    text-align: center;
+    margin-right: 2%;
+
+}
+
+.favorite {
+    margin-right: 5%;
+}
+
+.search-line {
+    margin-top: 5%;
+}
+
+.categories {
+    margin-top: 3%;
+    margin-left: 2%;
+    display: flex;
+    white-space: nowrap;
+    overflow-x: auto;
+    /* Прокрутка по горизонтали влево-вправо */
+    overflow-y: hidden;
+    /* Отключаем вертикальную прокрутку */
+    width: 100%;
+    color: rgba(6, 63, 92, 1);
+    font-size: 13px;
+}
+
+.header-cat-filter {
+    margin-right: 4%;
+}
+
+.header-choose-date-block {
+    margin-top: 3%;
+}
+
+.header-choose-date-btn {
+    text-decoration: none;
+    color: rgba(6, 63, 92, 1);
+    background-color: white;
+    border: 1px solid rgba(65, 158, 189, 1);
+    border-radius: 12px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-size: 11px;
+}
+
+.header-calender {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.events-category-block {
+    display: flex;
+    /* white-space: nowrap; */
+    overflow-x: auto;
+    /* Прокрутка по горизонтали влево-вправо */
+    overflow-y: hidden;
+    /* Отключаем вертикальную прокрутку */
+    width: 100%;
+    height: 230px;
+    margin-bottom: 5%;
+}
+
+.category-block {
+    height: 100vh;
+    /* background-color: black; */
+}
+
+.table-events {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 90%;
+    margin-left: 50%;
+    margin: 0 auto;
+}

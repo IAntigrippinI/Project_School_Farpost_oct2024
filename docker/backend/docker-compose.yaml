@@ -1,0 +1,16 @@
+#Отдельный для бэка
+services:
+
+  app:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+  db:
+    image: postgresql
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=vlru
+    ports:
+      - 5432:5432
