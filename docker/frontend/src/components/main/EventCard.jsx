@@ -17,7 +17,7 @@ const EventCard = ({ key, props }) => {
                         <img className='eventcard-heart' src={heart} />
                     </div>
                 </div>
-                <div className="eventcard-title">{props.title.slice(0, 60)}</div>
+                <div className="eventcard-title">{props.title.slice(0, 45)}</div>
                 <div className="eventcard-date">{props.date.replace('T', ' ').slice(5, -10)}</div>
                 <div className="eventcard-place">Место проведения</div>
                 <div className="eventcard-bottom">

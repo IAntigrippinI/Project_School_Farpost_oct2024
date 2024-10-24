@@ -3,6 +3,7 @@ import logo from './../../../images/logo.jpeg'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../../../backend';
 
 import Button from '../../../components/auth/Button/Button';
 import ButtonLogin from '../../../components/auth/Button/ButtonLogin'
@@ -10,18 +11,23 @@ import InputFields from '../../../components/auth/InputFields/InputFields'
 
 const AuthPage = () => {
 
-    let api = 'http://127.0.0.1:8000/auth/login'
+
+    let api_log = `${api}/auth/login`
+    let api_reg = `${api}/auth/register`
     let inactive_style = 'auth-btn-swch-inactive'
     let active_style = 'auth-btn-swch-active'
     const navigate = useNavigate()
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [isReg, setIsReg] = useState(0)
+    const [userReg, setUserReg] = useState(0)
+    const [statusReg, setStarusReg] = useState('')
 
 
 
     function onChangePhone(e) {
         setPhone(e.target.value)
+        setStarusReg('')
     }
     function onChangePassword(e) {
         setPassword(e.target.value)
@@ -33,7 +39,7 @@ const AuthPage = () => {
             phone: phone,
             password: password,
         };
-        axios.post(api, data, {
+        axios.post(api_log, data, {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,6 +49,34 @@ const AuthPage = () => {
 
             document.cookie = 'access_token=' + resp.data.token
             navigate('/')
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+
+    function onClickRegistr(e) {
+        const data = {
+            phone: phone,
+            password: '123',
+        };
+        axios.post(api_reg, data, {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((resp) => {
+            console.log(resp.data.status)
+            console.log(resp.data.message)
+            if (resp.data.status == 'error') {
+                setStarusReg('Пользовтель с таким номером уже существует')
+
+            }
+            else {
+                setStarusReg('Успешная регистрация')
+            }
+            setUserReg(1)
+
+
         }).catch((err) => {
             console.log(err)
         });
@@ -80,7 +114,8 @@ const AuthPage = () => {
                             <InputFields onChange={onChangePhone} description={'Телефон'} />
                         </div>
                         <div className="auth-btns-login-field">
-                            <ButtonLogin onClick={onClickLogin} text={'Получить код'} style={'auth-btn-login-orange'} />
+                            {userReg ? <p className='green-text-12'>{statusReg}</p> : <></>}
+                            <ButtonLogin onClick={onClickRegistr} text={'Получить код'} style={'auth-btn-login-orange'} />
                             <ButtonLogin text={'Войти через телеграм'} style={'auth-btn-login-white'} />
                         </div>
                     </> : <> <div className="auth-inp-block">

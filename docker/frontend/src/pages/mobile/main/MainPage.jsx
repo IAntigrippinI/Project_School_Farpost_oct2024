@@ -20,7 +20,6 @@ const MainPage = () => {
 
     function fetchRec() {
         axios.get(`${api}/events?per_page=5`).then((resp) => {
-            console.log(resp)
             setEvents(resp.data)
         })
     }
@@ -28,16 +27,15 @@ const MainPage = () => {
     function fechCategory() {
         axios.get(`${api}/events?category=${category}&page=${page}&per_page=15`).then((resp) => {
             setEventsByCategory(resp.data)
-            console.log(resp)
         })
     }
+
 
     function ClickCat(e) {
         if (category == e.target.innerText) {
             setCategory(0)
         }
         else {
-            console.log(e.target.innerText)
 
             setCategory(e.target.innerText)
 
